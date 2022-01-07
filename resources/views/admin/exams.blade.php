@@ -25,7 +25,14 @@ $pageName = 'Manage Exams';
             <div class="card">
                 <div class="card-header" style="display: flex; justify-content:space-between; align-items:center">
                     <div>Simple Datatable</div>
-                    <a href="/admin/exams/create"><button class="btn btn-primary">Add Exam</button></a>
+                    <div>
+                        <form action="/admin/exams/create" method="GET">
+                            <label for="">Number of Questions</label>
+                            <input max=30 value=1 style="border: rgb(67,94,190) solid 3px; width:70px; height:36px"
+                                class="btn" type="number" name="exam_num_qus">
+                            <button class="btn btn-primary">Add Exam</button>
+                        </form>
+                    </div>
                 </div>
                 <div class="card-body">
                     <table class="table table-striped" id="table1">

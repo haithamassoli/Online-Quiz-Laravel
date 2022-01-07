@@ -16,8 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users=User::all();
-        return view('admin.users',compact('users'));
+        $users = User::all();
+        return view('admin.users', compact('users'));
     }
 
     /**
@@ -46,8 +46,8 @@ class UserController extends Controller
             'image' => 'mimes:jpg,png,jpeg|max:5048'
         ]);
 
-        if ($request->hasfile('image')){
-            $newImageName = time().'-'.$request->name . '.'.$request->image->extension();
+        if ($request->hasfile('image')) {
+            $newImageName = time() . '-' . $request->name . '.' . $request->image->extension();
             $request->image->move(public_path('img'), $newImageName);
             $user = User::create([
                 'name' => $request->input('name'),
@@ -55,18 +55,18 @@ class UserController extends Controller
                 'password' => Hash::make($request->input('password')),
                 'role_type' => $request->input('role_type'),
                 'image' => $newImageName,
-        ]);
-        return redirect('admin/users')->with('success', 'Added successfully');
-    } else {
-        $user = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'role_type' => $request->input('role_type'),
-        ]);
-        return redirect('admin/users')->with('success', 'Added successfully');
+            ]);
+            return redirect('admin/users')->with('success', 'Added successfully');
+        } else {
+            $user = User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'role_type' => $request->input('role_type'),
+            ]);
+            return redirect('admin/users')->with('success', 'Added successfully');
+        }
     }
-}
 
     /**
      * Display the specified resource.
@@ -77,9 +77,9 @@ class UserController extends Controller
     public function show($id)
     {
         $users = User::find($id);
-        return view('admin.show_user',compact('users'));
+        return view('admin.show_user', compact('users'));
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -89,7 +89,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('admin.edit_user',compact('user'));
+        return view('admin.edit_user', compact('user'));
     }
 
     /**
@@ -109,28 +109,28 @@ class UserController extends Controller
             'image' => 'mimes:jpg,png,jpeg|max:5048'
         ]);
 
-    if ($request->hasfile('image')){
-        $newImageName = time().'-'.$request->name . '.'.$request->image->extension();
-        $request->image->move(public_path('img'), $newImageName);
-        $user = User::where('id', $id)
-        ->update([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'role_type' => $request->input('role_type'),
-            'image' => $newImageName,
-    ]);
-    return redirect('admin/users')->with('success', 'Updated successfully');
-    } else {
-        $user = User::where('id', $id)
-        ->update([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'role_type' => $request->input('role_type'),
-    ]);
-    return redirect('admin/users')->with('success', 'Updated successfully');
-    }
+        if ($request->hasfile('image')) {
+            $newImageName = time() . '-' . $request->name . '.' . $request->image->extension();
+            $request->image->move(public_path('img'), $newImageName);
+            $user = User::where('id', $id)
+                ->update([
+                    'name' => $request->input('name'),
+                    'email' => $request->input('email'),
+                    'password' => Hash::make($request->input('password')),
+                    'role_type' => $request->input('role_type'),
+                    'image' => $newImageName,
+                ]);
+            return redirect('admin/users')->with('success', 'Updated successfully');
+        } else {
+            $user = User::where('id', $id)
+                ->update([
+                    'name' => $request->input('name'),
+                    'email' => $request->input('email'),
+                    'password' => Hash::make($request->input('password')),
+                    'role_type' => $request->input('role_type'),
+                ]);
+            return redirect('admin/users')->with('success', 'Updated successfully');
+        }
     }
 
     /**

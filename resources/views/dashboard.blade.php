@@ -9,7 +9,7 @@
                     <div class="dashboard-header d-flex">
                         <div class="d-flex align-items-center flex-column ">
                             <div id="profileImg" class="dashboard-center ">
-                                <img class="dashboard-img" src="{{ Auth::user()->image }}" alt="" id="profile">
+                                <img class="dashboard-img" src="img/{{Auth::user()->image}}" alt="" id="profile">
                             </div>
                             <div class="welcome">
                                 <div class="dashboard-title">Hi <span id="username">{{ Auth::user()->name }}</span> !
@@ -42,7 +42,7 @@
                                                 class="dm-none">Question</span></li>
                                         <li> <i class="far fa-history"></i><span class="mx-1">01.25</span><span
                                                 class="dm-none">Minute</span></li>
-                                        <li><a href="quiz.html" id="quizStart1" class="btn primaryBtn start-btn ">Start</a>
+                                        <li><a href="/dashboard/{{$exam->id }}" id="quizStart1" class="btn primaryBtn start-btn ">Start</a>
                                         </li>
                                     </ul>
                                 </div>

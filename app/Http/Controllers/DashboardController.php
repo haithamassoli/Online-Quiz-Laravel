@@ -12,4 +12,10 @@ class DashboardController extends Controller
         $exams = Exam::all();
         return view('dashboard', compact('exams'));
     }
+
+    public function show($id)
+    {
+        $exam = Exam::find($id);
+        return view('exam', compact('exam'));
+    }
 }

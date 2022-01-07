@@ -14,7 +14,13 @@ class Question extends Model
         'question_options',
         'correct_answer',
         'question_point',
+        'exam_id',
     ];
 
     public $timestamps = false;
+
+    public function exams()
+    {
+        return $this->belongsTo(Exam::class);
+    }
 }

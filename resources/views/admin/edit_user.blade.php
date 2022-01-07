@@ -1,5 +1,5 @@
 @php
-$pageName = 'Manage Exams';
+$pageName = 'Manage Users';
 @endphp
 @extends('admin.layouts.admin')
 @section('content')

@@ -15,4 +15,9 @@ class Exam extends Model
         'exam_num_qus',
         'exam_img',
     ];
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
 }

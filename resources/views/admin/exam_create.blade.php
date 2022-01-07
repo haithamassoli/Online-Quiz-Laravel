@@ -3,6 +3,12 @@ $pageName = 'Manage Exams';
 @endphp
 @extends('admin.layouts.admin')
 @section('content')
+    <style>
+        .ck-editor__editable {
+            min-height: 200px;
+        }
+
+    </style>
     <div class="col-12">
         <div class="card">
             <div class="card-header">
@@ -43,74 +49,67 @@ $pageName = 'Manage Exams';
                                     <div class="form-group has-icon-left">
                                         <label for="password-id-icon">Number of Questions</label>
                                         <div class="position-relative">
-                                            <input type="number" name="exam_num_qus" class="form-control"
-                                                placeholder="Number of Questions" id="password-id-icon">
+                                            <input type="number" value={{ $exam_num_qus }} name="exam_num_qus"
+                                                class="form-control" placeholder="Number of Questions"
+                                                id="password-id-icon">
                                             <div class="form-control-icon">
                                                 <i class="bi bi-lock"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group has-icon-left">
-                                        <label for="email-id-icon">Descreption</label>
-                                        <div class="position-relative">
-                                            <input type="text" name="exam_desc" class="form-control"
-                                                placeholder="Descreption" id="email-id-icon">
-                                            <div class="form-control-icon">
-                                                <i class="bi bi-envelope"></i>
+                                @php $counter=1; @endphp
+                                @for ($i = 0; $i < $exam_num_qus; $i++)
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group has-icon-left">
+                                            <label for="email-id-icon">Question {{ $counter }} Point</label>
+                                            <div class="position-relative">
+                                                <input type="text" name="question_point{{ $counter }}"
+                                                    class="form-control" placeholder="Question Point" id="email-id-icon">
+                                                <div class="form-control-icon">
+                                                    <i class="bi bi-envelope"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group has-icon-left">
-                                        <label for="email-id-icon">Question</label>
-                                        <div class="position-relative">
-                                            <input type="text" name="question_content" class="form-control"
-                                                placeholder="Question" id="email-id-icon">
-                                            <div class="form-control-icon">
-                                                <i class="bi bi-envelope"></i>
+                                    <div class="col-12">
+                                        <div class="form-group has-icon-left">
+                                            <label for="email-id-icon">Question {{ $counter }}</label>
+                                            <div class="position-relative">
+                                                <textarea class="ckeditor" name="question_content{{ $counter }}"
+                                                    id="editor"></textarea>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group has-icon-left">
-                                        <label for="email-id-icon">Question Options</label>
-                                        <div class="position-relative">
-                                            <input type="text" name="question_options" class="form-control"
-                                                placeholder="split it with ," id="email-id-icon">
-                                            <div class="form-control-icon">
-                                                <i class="bi bi-envelope"></i>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group has-icon-left">
+                                            <label for="email-id-icon">Question {{ $counter }} Options</label>
+                                            <div class="position-relative">
+                                                <input type="text" name="question_options{{ $counter }}"
+                                                    class="form-control" placeholder="split it with ," id="email-id-icon">
+                                                <div class="form-control-icon">
+                                                    <i class="bi bi-envelope"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group has-icon-left">
-                                        <label for="email-id-icon">Correct Answer</label>
-                                        <div class="position-relative">
-                                            <input type="text" name="correct_answer" class="form-control"
-                                                placeholder="Correct Answer" id="email-id-icon">
-                                            <div class="form-control-icon">
-                                                <i class="bi bi-envelope"></i>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group has-icon-left">
+                                            <label for="email-id-icon">Correct Answer {{ $counter }}</label>
+                                            <div class="position-relative">
+                                                <input type="text" name="correct_answer{{ $counter }}"
+                                                    class="form-control" placeholder="Correct Answer" id="email-id-icon">
+                                                <div class="form-control-icon">
+                                                    <i class="bi bi-envelope"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group has-icon-left">
-                                        <label for="email-id-icon">Question Point</label>
-                                        <div class="position-relative">
-                                            <input type="text" name="question_point" class="form-control"
-                                                placeholder="Question Point" id="email-id-icon">
-                                            <div class="form-control-icon">
-                                                <i class="bi bi-envelope"></i>
-                                            </div>
-                                        </div>
+                                    @php $counter++; @endphp
+                                    <div
+                                        style="height: 10px; background-color:rgba(67,94,190,0.5); width:100%; margin:30px 0">
                                     </div>
-                                </div>
+                                @endfor
                                 <div class="col-12 col-md-6">
                                     <div class="form-group has-icon-left">
                                         <label for="password-id-icon">Image</label>
@@ -134,4 +133,7 @@ $pageName = 'Manage Exams';
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script src="//cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
 @endsection

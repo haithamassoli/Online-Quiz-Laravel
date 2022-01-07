@@ -27,9 +27,10 @@ class ExamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.exam_create');
+        $exam_num_qus = (int)$request->get('exam_num_qus');
+        return view('admin.exam_create', compact('exam_num_qus'));
     }
 
     /**
@@ -40,6 +41,8 @@ class ExamController extends Controller
      */
     public function store(Request $request)
     {
+        $counter = 1;
+
         $request->validate([
             'exam_name' => 'required',
             'exam_desc' => 'required',
@@ -47,9 +50,11 @@ class ExamController extends Controller
             'exam_img' => 'mimes:jpg,png,jpeg|max:5048'
         ]);
 
-        if ($request->hasfile('exam_img')){
+        $exam_num_qus = $request->input('exam_num_qus');
 
-            $newImageName = time().'-'.$request->exam_name . '.'.$request->exam_img->extension();
+        if ($request->hasfile('exam_img')) {
+
+            $newImageName = time() . '-' . $request->exam_name . '.' . $request->exam_img->extension();
             $request->exam_img->move(public_path('img'), $newImageName);
 
             $exam = Exam::create([
@@ -57,16 +62,50 @@ class ExamController extends Controller
                 'exam_desc' => $request->input('exam_desc'),
                 'exam_num_qus' => $request->input('exam_num_qus'),
                 'exam_img' => $newImageName,
-        ]);
-        return redirect('admin/exams')->with('success', 'Added successfully');
-    } else {
-        $exam = Exam::create([
-            'exam_name' => $request->input('exam_name'),
-            'exam_desc' => $request->input('exam_desc'),
-            'exam_num_qus' => $request->input('exam_num_qus'),
-        ]);
-        return redirect('admin/exams')->with('success', 'Added successfully');
-    }
+            ]);
+
+            $id = Exam::select('id')
+                ->where('exam_name', '=', $request->input('exam_name'))
+                ->first();
+            $id = $id->id;
+
+            for ($i = 0; $i < $exam_num_qus; $i++) {
+                $question = Question::create([
+                    'question_content' => $request->input("question_content$counter"),
+                    'question_point' => $request->input("question_point$counter"),
+                    'question_options' => $request->input("question_options$counter"),
+                    'correct_answer' => $request->input("correct_answer$counter"),
+                    'exam_id' => $id,
+                ]);
+                $counter++;
+            }
+            return redirect('admin/exams')->with('success', 'Added successfully');
+        } else {
+
+            $exam = Exam::create([
+                'exam_name' => $request->input('exam_name'),
+                'exam_desc' => $request->input('exam_desc'),
+                'exam_num_qus' => $request->input('exam_num_qus'),
+            ]);
+
+            $id = Exam::select('id')
+                ->where('exam_name', '=', $request->input('exam_name'))
+                ->first();
+
+            $id = $id->id;
+
+            for ($i = 0; $i < $exam_num_qus; $i++) {
+                $question = Question::create([
+                    'question_content' => $request->input("question_content$counter"),
+                    'question_point' => $request->input("question_point$counter"),
+                    'question_options' => $request->input("question_options$counter"),
+                    'correct_answer' => $request->input("correct_answer$counter"),
+                    'exam_id' => $id,
+                ]);
+                $counter++;
+            }
+            return redirect('admin/exams')->with('success', 'Added successfully');
+        }
     }
 
     /**
@@ -79,8 +118,7 @@ class ExamController extends Controller
     {
         $exam = Exam::find($id);
         $questions = Question::where('exam_id', $id)->get();
-        // dd($questions);
-        return view('admin.show_exam',compact(['exam','questions']));
+        return view('admin.show_exam', compact(['exam', 'questions']));
     }
 
     /**
@@ -92,7 +130,7 @@ class ExamController extends Controller
     public function edit($id)
     {
         $exam = Exam::find($id);
-        return view('admin.edit_exam',compact('exam'));
+        return view('admin.edit_exam', compact('exam'));
     }
 
     /**
@@ -104,6 +142,7 @@ class ExamController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $counter = 1;
         $request->validate([
             'exam_name' => 'required',
             'exam_desc' => 'required',
@@ -111,27 +150,53 @@ class ExamController extends Controller
             'exam_img' => 'mimes:jpg,png,jpeg|max:5048'
         ]);
 
-    if ($request->hasfile('image')){
-        $newImageName = time().'-'.$request->exam_name . '.'.$request->exam_img->extension();
-        $request->exam_img->move(public_path('img'), $newImageName);
+        $exam_num_qus = $request->input('exam_num_qus');
 
-        $exam = Exam::where('id', $id)
-        ->update([
-            'exam_name' => $request->input('exam_name'),
-            'exam_desc' => $request->input('exam_desc'),
-            'exam_num_qus' =>  $request->input('exam_num_qus'),
-            'exam_img' => $newImageName,
-    ]);
-    return redirect('admin/exams')->with('success', 'Updated successfully');
-    } else {
-        $exam = Exam::where('id', $id)
-        ->update([
-            'exam_name' => $request->input('exam_name'),
-            'exam_desc' => $request->input('exam_desc'),
-            'exam_num_qus' => $request->input('exam_num_qus'),
-    ]);
-    return redirect('admin/exams')->with('success', 'Updated successfully');
-    }
+        if ($request->hasfile('image')) {
+            $newImageName = time() . '-' . $request->exam_name . '.' . $request->exam_img->extension();
+            $request->exam_img->move(public_path('img'), $newImageName);
+
+            $exam = Exam::where('id', $id)
+                ->update([
+                    'exam_name' => $request->input('exam_name'),
+                    'exam_desc' => $request->input('exam_desc'),
+                    'exam_num_qus' =>  $request->input('exam_num_qus'),
+                    'exam_img' => $newImageName,
+                ]);
+
+            for ($i = 0; $i < $exam_num_qus; $i++) {
+                $question = Question::where('exam_id', $id)
+                    ->update([
+                        'question_content' => $request->input("question_content$counter"),
+                        'question_point' => $request->input("question_point$counter"),
+                        'question_options' => $request->input("question_options$counter"),
+                        'correct_answer' => $request->input("correct_answer$counter"),
+                        'exam_id' => $id,
+                    ]);
+                $counter++;
+            }
+            return redirect('admin/exams')->with('success', 'Updated successfully');
+        } else {
+            $exam = Exam::where('id', $id)
+                ->update([
+                    'exam_name' => $request->input('exam_name'),
+                    'exam_desc' => $request->input('exam_desc'),
+                    'exam_num_qus' => $request->input('exam_num_qus'),
+                ]);
+
+            for ($i = 0; $i < $exam_num_qus; $i++) {
+                $question = Question::where('exam_id', $id)
+                    ->update([
+                        'question_content' => $request->input("question_content$counter"),
+                        'question_point' => $request->input("question_point$counter"),
+                        'question_options' => $request->input("question_options$counter"),
+                        'correct_answer' => $request->input("correct_answer$counter"),
+                        'exam_id' => $id,
+                    ]);
+                $counter++;
+            }
+            return redirect('admin/exams')->with('success', 'Updated successfully');
+        }
     }
 
     /**

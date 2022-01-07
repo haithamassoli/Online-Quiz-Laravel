@@ -16,8 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories=Category::all();
-        return view('admin.categories',compact('categories'));
+        $categories = Category::all();
+        return view('admin.categories', compact('categories'));
     }
 
     /**
@@ -73,7 +73,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
-        return view('admin.edit_category',compact('category'));
+        return view('admin.edit_category', compact('category'));
     }
 
     /**
@@ -93,12 +93,12 @@ class CategoryController extends Controller
         ]);
 
         $Category = Category::where('id', $id)
-        ->update([
-            'exam_name' => $request->input('exam_name'),
-            'exam_desc' => $request->input('exam_desc'),
-            'exam_num_qus' => $request->input('exam_num_qus'),
-    ]);
-    return redirect('admin/categories')->with('success', 'Updated successfully');
+            ->update([
+                'exam_name' => $request->input('exam_name'),
+                'exam_desc' => $request->input('exam_desc'),
+                'exam_num_qus' => $request->input('exam_num_qus'),
+            ]);
+        return redirect('admin/categories')->with('success', 'Updated successfully');
     }
 
     /**
