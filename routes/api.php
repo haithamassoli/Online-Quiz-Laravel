@@ -17,5 +17,6 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
-Route::get('exam', [App\Http\Controllers\api\showExamController::class, 'api']);
+// Route::middleware(['auth:api'])->group(function () {}
+Route::get('exam/{id}', [App\Http\Controllers\api\showExamController::class, 'index']);
+Route::post('exam/create', [App\Http\Controllers\api\showExamController::class, 'create']);

@@ -9,10 +9,10 @@
                     <div class="dashboard-header d-flex">
                         <div class="d-flex align-items-center flex-column ">
                             <div id="profileImg" class="dashboard-center ">
-                                <img class="dashboard-img" src="img/{{Auth::user()->image}}" alt="" id="profile">
+                                <img class="dashboard-img" src="/img/{{Auth::user()->image}}" alt="" id="profile">
                             </div>
                             <div class="welcome">
-                                <div class="dashboard-title">Hi <span id="username">{{ Auth::user()->name }}</span> !
+                                <div class="dashboard-title">Hi <span id="username">@php echo ucwords( Auth::user()->name); @endphp</span> !
                                 </div>
                                 <div class="dashboard-des">Welcome back</div>
                             </div>
