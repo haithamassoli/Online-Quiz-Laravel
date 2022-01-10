@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
+@php $title = "Dashboard"; @endphp
+@section('title', $title)
+
 @section('content')
+
+@php
+    use Carbon\Carbon;
+@endphp
     <!-- End Navbar -->
     <section class="dashboard">
         <div class="page-header">
@@ -37,12 +44,24 @@
                                         {{ $exam->exam_name }}
                                     </div>
                                     <ul>
-                                        <li> <i class="far fa-book-open"></i><span
-                                                class="mx-1">{{ $exam->exam_num_qus }}</span><span
-                                                class="dm-none">Question</span></li>
-                                        <li> <i class="far fa-history"></i><span class="mx-1">01.25</span><span
-                                                class="dm-none">Minute</span></li>
-                                        <li><a href="/dashboard/{{$exam->id }}" id="quizStart1" class="btn primaryBtn start-btn ">Start</a>
+                                        <li> 
+                                            <div>
+                                                <i class="far fa-book-open"></i>
+                                            </div>
+                                                <span
+                                                    class="mx-1">{{ $exam->exam_num_qus }}</span>
+                                                <span
+                                                    class="dm-none">Question
+                                                </span>
+                                            </li>
+                                        <li> 
+                                            <div>
+                                                <i class="far fa-history"></i>
+                                            </div>
+                                            <span class="mx-1 text-sm small ">{{ $exam->created_at->diffForHumans() }}</span>
+                                        </li>
+                                        <li>
+                                            <a href="/dashboard/{{$exam->id }}" id="quizStart1" class="btn primaryBtn start-btn ">Start</a>
                                         </li>
                                     </ul>
                                 </div>

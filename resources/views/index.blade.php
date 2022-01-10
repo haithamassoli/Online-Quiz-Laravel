@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@php $title = "Home"; @endphp
+@section('title', $title)
+
 @section('content')
     <section class="home-page ">
         <div class="container ">

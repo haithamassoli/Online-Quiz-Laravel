@@ -1,5 +1,6 @@
 @extends('layouts.app')
-
+@php $title = "Register"; @endphp
+@section('title', $title)
 @section('content')
     <section class="Login">
         <div class="container mt-5">

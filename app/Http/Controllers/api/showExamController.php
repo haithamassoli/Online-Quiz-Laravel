@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Exam;
 use App\Models\User;
 use App\Models\UserAnswer;
+use Illuminate\Support\Facades\Auth;
 
 class showExamController extends Controller
 {

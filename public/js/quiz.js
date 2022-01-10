@@ -19,12 +19,17 @@ const footer = document.querySelector("footer");
 const userId = document
     .querySelector("meta[name='user-id']")
     .getAttribute("content");
+const token = document
+    .querySelector("meta[name='csrf-token']")
+    .getAttribute("content");
 
 let largeDiv = document.createElement("div");
 let userAnswer;
 let numOfQuestion = 0;
 let right_answer;
 let correct = 0;
+let total = 0;
+let mark = 0;
 let user_answers = [];
 let right_answers = [];
 let labelAns = [];
@@ -54,7 +59,9 @@ function loadQuestions(number) {
             if (number < data[0].exam_num_qus) {
                 window.exam_num_qus = data[0].questions.length;
                 window.question_id = data[0].questions[number].id;
-                console.log(data[0]);
+                window.question_point =
+                    data[0].questions[number].question_point;
+                mark += parseInt(window.question_point);
                 quizName.innerHTML = data[0].exam_name;
                 options = data[0].questions[number].question_options;
                 addQuestion(
@@ -104,7 +111,6 @@ function loadResult() {
     fetch(`http://127.0.0.1:8000/api/exam/${exam_id}`)
         .then((response) => response.json())
         .then((data) => {
-            // store_user_answer();
             clearInterval(counter);
             clearInterval(counterLine);
             result.innerHTML = "";
@@ -184,20 +190,20 @@ function checkRightAnswer(correct_answer) {
         if (input.checked) {
             userAnswer = input.nextElementSibling.innerHTML;
             store_user_answer(userAnswer);
-            console.log(userAnswer);
             right_answers.push(correct_answer);
             user_answers.push(userAnswer);
             if (userAnswer !== correct_answer) {
             } else {
-                correct++;
+                total += parseInt(window.question_point);
+                correct = parseInt(window.question_point);
             }
         }
     });
 
     score_text.innerHTML = `${
-        correct >= 3 ? "perfect" : "Hard luck"
-    } ${correct}/5`;
-    if (correct >= 3) {
+        total >= mark / 2 ? "perfect" : "Hard luck"
+    } ${total}/${mark}`;
+    if (total >= mark / 2) {
         score_text.style.color = "green";
         result_img.src = "/img/good.jpg";
     } else {
@@ -232,7 +238,7 @@ function startTimer(time) {
             startTimer(15);
             startTimerLine(15);
 
-            numOfQuestion > 4 ? loadResult() : "";
+            numOfQuestion > window.exam_num_qus - 1 ? loadResult() : "";
         }
     }
 }
@@ -256,13 +262,17 @@ function store_user_answer(userAnswer) {
         method: "POST",
         headers: {
             "Content-type": "application/json",
+            // Authorization: token,
+            // "X-CSRF-TOKEN": `bearer ${token}`,
+            "X-CSRF-TOKEN": token,
         },
         body: JSON.stringify({
             exam_id: parseInt(exam_id),
             user_id: parseInt(userId),
             question_id: parseInt(window.question_id),
             user_answer: userAnswer,
-            marks: 10,
+            marks: correct,
+            token: token,
         }),
     })
         .then((res) => res.json())

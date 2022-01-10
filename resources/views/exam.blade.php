@@ -1,5 +1,7 @@
 @extends('layouts.app')
 <link rel="stylesheet" href="{{asset('css/quiz.css')}}" />
+@php $title = "Exam"; @endphp
+@section('title', $title)
 @section('content')
   <div class="info_box activeInfo">
     <div class="info-title"><span>Some Rules of this Quiz</span></div>

@@ -1,5 +1,6 @@
 @extends('layouts.app')
-
+@php $title = "Confirm Password"; @endphp
+@section('title', $title)
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

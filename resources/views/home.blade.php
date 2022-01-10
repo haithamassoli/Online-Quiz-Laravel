@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@php $title = "Home"; @endphp
+@section('title', $title)
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

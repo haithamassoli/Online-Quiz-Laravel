@@ -25,7 +25,7 @@ Route::get('/', function () {
 
 
 // for admin
-Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () {
+Route::name('admin.')->prefix('admin')->middleware(['auth', 'role'])->group(function () {
     Route::get('/', function () {
         return view('admin.index');
     })->name('dashboard');

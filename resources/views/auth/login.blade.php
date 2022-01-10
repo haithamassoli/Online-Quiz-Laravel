@@ -1,5 +1,6 @@
 @extends('layouts.app')
-
+@php $title = "Login"; @endphp
+@section('title', $title)
 @section('content')
     <style>
         input[type='checkbox'] {

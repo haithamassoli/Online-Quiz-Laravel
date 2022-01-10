@@ -7,11 +7,14 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="user-id" content="{{ Auth::user()->id }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    @auth <meta name="user-id" content="{{ Auth::user()->id }}"> @endauth
+    <title>@yield('title')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{{ asset('img/logo.svg') }}" type="image/x-icon">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -89,6 +92,8 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        @if ($title != 'Exam')            
         <aside class="floaty-bar">
             <div class="main-header box-shadow-header floaty">
                 <div class="container">
@@ -118,6 +123,7 @@
                 </div>
             </div>
         </footer>
+        @endif
     </div>
 </body>
 
