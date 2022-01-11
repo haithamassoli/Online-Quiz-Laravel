@@ -116,7 +116,7 @@ class ExamController extends Controller
      */
     public function show($id)
     {
-        $exam = Exam::find($id);
+        $exam = Exam::findOrFail($id);
         $questions = Question::where('exam_id', $id)->get();
         return view('admin.show_exam', compact(['exam', 'questions']));
     }
@@ -129,7 +129,7 @@ class ExamController extends Controller
      */
     public function edit($id)
     {
-        $exam = Exam::find($id);
+        $exam = Exam::findOrFail($id);
         return view('admin.edit_exam', compact('exam'));
     }
 

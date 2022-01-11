@@ -21,7 +21,7 @@ Auth::routes();
 
 Route::get('/', function () {
     return view('index');
-});
+})->middleware('guest');
 
 
 // for admin
@@ -37,6 +37,8 @@ Route::name('admin.')->prefix('admin')->middleware(['auth', 'role'])->group(func
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::middleware(['auth'])->group(function () {
+    Route::get('/profile/{user_id}', [App\Http\Controllers\DashboardController::class, 'profile'])->name('profile');
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/{exam}', [App\Http\Controllers\DashboardController::class, 'show'])->name('exam');
+    Route::get('/result/{exam}', [App\Http\Controllers\DashboardController::class, 'result'])->name('result');
 });

@@ -1,8 +1,7 @@
 @extends('layouts.app')
-
-@php $title = "Dashboard"; @endphp
+<link rel="stylesheet" href="{{ asset('css/quiz.css') }}" />
+@php $title = "Profile"; @endphp
 @section('title', $title)
-
 @section('content')
 
     @php
@@ -30,26 +29,25 @@
         </div>
         <div class="container ">
             <div class="quizes-title">
-                <div class="quize-bold">Quizes</div>
-                <div class="quize-des">Test your knowledge</div>
+                <div class="quize-bold">Completed Quizes</div>
             </div>
             @include('alerts.fail')
             <div class="row quizes-padding ">
-                @foreach ($exams as $key => $exam)
+                @foreach ($user[0]->exams as $key => $item)
                     <div class="col-lg-4 col-md-6 col-sm-6 ">
                         <div class="quizes-card">
                             <div class="box_grid">
-                                <img src="{{ asset("img/$exam->exam_img") }}" alt="">
+                                <img src="{{ asset("img/$item->exam_img") }}" alt="">
                                 <div class="quiz-card">
                                     <div class="card-title">
-                                        {{ $exam->exam_name }}
+                                        {{ $item->exam_name }}
                                     </div>
                                     <ul>
                                         <li>
                                             <div>
                                                 <i class="far fa-book-open"></i>
                                             </div>
-                                            <span class="mx-1">{{ $exam->exam_num_qus }}</span>
+                                            <span class="mx-1">{{ $item->exam_num_qus }}</span>
                                             <span class="dm-none">Question
                                             </span>
                                         </li>
@@ -58,13 +56,12 @@
                                                 <i class="far fa-history"></i>
                                             </div>
                                             <span
-                                                class="mx-1 text-sm small ">{{ $exam->created_at->diffForHumans() }}</span>
+                                                class="mx-1 text-sm small ">{{ $item->created_at->diffForHumans() }}</span>
                                         </li>
                                         <li>
-                                            <a href="/dashboard/{{ $exam->id }}" id="quizStart1"
+                                            <a href="/result/{{$item->id}}" id="quizStart1"
                                                 class="btn primaryBtn start-btn ">
-                                                @if (isset($exam->userAnswer[$key]->exam_id))
-                                                    @if ($exam->userAnswer[$key]->exam_id == $exam->id) Complate @endif @else Start @endif
+                                                    Show
                                             </a>
                                         </li>
                                     </ul>

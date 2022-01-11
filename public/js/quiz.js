@@ -43,14 +43,16 @@ continue_btn.addEventListener("click", () => {
     startTimerLine(15);
 });
 
+let link = window.location.href.split("/");
+let exam_id = link.slice(-1)[0];
+
 Show_Answer.addEventListener("click", () => {
+    done();
+    window.open(`/result/${exam_id}`, "_self");
     result_box.classList.remove("activeResult");
     container.classList.add("active");
     footer.classList.remove("active");
 });
-
-let link = window.location.href.split("/");
-let exam_id = link.slice(-1)[0];
 
 function loadQuestions(number) {
     fetch(`http://127.0.0.1:8000/api/exam/${exam_id}`)
@@ -81,7 +83,6 @@ submit_Button.addEventListener("click", () => {
     reset();
     loadQuestions(numOfQuestion);
     if (numOfQuestion > window.exam_num_qus - 1) {
-        loadResult();
         container.classList.remove("active");
         result_box.classList.add("activeResult");
         numOfQuestion = 0;
@@ -105,60 +106,6 @@ function createBullets(numOfQuestion) {
             span.classList.add("active-question");
         }
     }
-}
-
-function loadResult() {
-    fetch(`http://127.0.0.1:8000/api/exam/${exam_id}`)
-        .then((response) => response.json())
-        .then((data) => {
-            clearInterval(counter);
-            clearInterval(counterLine);
-            result.innerHTML = "";
-            let counterResult = 0;
-            // show questions content
-            for (let i = 0; i < data[0].questions.length; i++) {
-                result.appendChild(largeDiv);
-                largeDiv.classList.add("largeDiv");
-                let h3 = document.createElement("h3");
-                let div = document.createElement("div");
-                largeDiv.appendChild(div);
-                div.classList.add("qusContainer");
-                h3.innerHTML =
-                    data[0].questions[counterResult].question_content;
-                counterResult++;
-                div.appendChild(h3);
-                let divAnswers = document.createElement("div");
-                divAnswers.classList.add("answers");
-                for (
-                    let j = 0;
-                    j < data[0].questions[i].question_options.split(",").length;
-                    j++
-                ) {
-                    let label = document.createElement("label");
-                    label.classList.add("resultLabel");
-                    label.innerHTML =
-                        data[0].questions[i].question_options.split(",")[j];
-                    divAnswers.append(label);
-                    labelAns.push(label);
-                    labelAns.forEach((e) => {
-                        if (
-                            e.innerHTML !=
-                                data[0].questions[i].correct_answer &&
-                            e.innerHTML == user_answers[i]
-                        ) {
-                            e.classList.add("incorrect");
-                        }
-                    });
-                    if (
-                        data[0].questions[i].question_options.split(",")[j] ==
-                        data[0].questions[i].correct_answer
-                    ) {
-                        label.classList.add("correct");
-                    }
-                }
-                div.appendChild(divAnswers);
-            }
-        });
 }
 
 function addQuestion(arrayOfOptions, number_of_question) {
@@ -199,17 +146,8 @@ function checkRightAnswer(correct_answer) {
             }
         }
     });
-
-    score_text.innerHTML = `${
-        total >= mark / 2 ? "perfect" : "Hard luck"
-    } ${total}/${mark}`;
-    if (total >= mark / 2) {
-        score_text.style.color = "green";
-        result_img.src = "/img/good.jpg";
-    } else {
-        score_text.style.color = "red";
-        result_img.src = "/img/bad.jpg";
-    }
+    score_text.style.color = "green";
+    result_img.src = "/img/good.jpg";
 }
 
 function reset() {
@@ -238,7 +176,9 @@ function startTimer(time) {
             startTimer(15);
             startTimerLine(15);
 
-            numOfQuestion > window.exam_num_qus - 1 ? loadResult() : "";
+            numOfQuestion > window.exam_num_qus - 1
+                ? window.open(`/result/${exam_id}`, "_self")
+                : "";
         }
     }
 }
@@ -262,9 +202,6 @@ function store_user_answer(userAnswer) {
         method: "POST",
         headers: {
             "Content-type": "application/json",
-            // Authorization: token,
-            // "X-CSRF-TOKEN": `bearer ${token}`,
-            "X-CSRF-TOKEN": token,
         },
         body: JSON.stringify({
             exam_id: parseInt(exam_id),
@@ -272,7 +209,21 @@ function store_user_answer(userAnswer) {
             question_id: parseInt(window.question_id),
             user_answer: userAnswer,
             marks: correct,
-            token: token,
+        }),
+    })
+        .then((res) => res.json())
+        .then(() => location.reload);
+}
+
+function done() {
+    fetch("http://127.0.0.1:8000/api/exam/done", {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+            exam_id: parseInt(exam_id),
+            user_id: parseInt(userId),
         }),
     })
         .then((res) => res.json())

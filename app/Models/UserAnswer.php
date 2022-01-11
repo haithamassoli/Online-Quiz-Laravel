@@ -19,4 +19,18 @@ class UserAnswer extends Model
 
     public $timestamps = false;
 
+    public function exams()
+    {
+        return $this->belongsTo(Exam::class);
+    }
+
+    public function questions()
+    {
+        return $this->hasOne(Questions::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

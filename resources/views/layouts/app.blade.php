@@ -7,7 +7,8 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @auth <meta name="user-id" content="{{ Auth::user()->id }}"> @endauth
+    @auth
+    <meta name="user-id" content="{{ Auth::user()->id }}"> @endauth
     <title>@yield('title')</title>
 
     <!-- Scripts -->
@@ -71,9 +72,12 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/profile/{{ Auth::user()->id }}">
+                                        {{ __('Profile') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                                                                         document.getElementById('logout-form').submit();">
+                                                                                                                                                     document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -89,41 +93,37 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+        @yield('content')
 
-        @if ($title != 'Exam')            
-        <aside class="floaty-bar">
-            <div class="main-header box-shadow-header floaty">
+            <aside class="floaty-bar">
+                <div class="main-header box-shadow-header floaty">
+                    <div class="container">
+                        <div class="footer d-flex align-items-center ">
+                            <div class="col-md-4 center">
+                                <i class="fas fa-book-open me-1"></i> <a class="white" href="#">Quizes</a>
+                            </div>
+                            <div class="border"></div>
+                            <div class="col-md-4 center">
+                                <i class="fas fa-rabbit me-1"></i><a class="white" href="about.html">About</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <footer style="bottom: 0; width:100%; position:fixed">
                 <div class="container">
-                    <div class="footer d-flex align-items-center ">
-                        <div class="col-md-4 center">
-                            <i class="fas fa-book-open me-1"></i> <a class="white" href="#">Quizes</a>
+                    <div class="footer-link d-flex justify-content-between">
+                        <div class="d-flex">
+                            <div><a class="link" href="about.html">About</a></div>
+                            <div><a class="link" href="#">Help</a></div>
+                            <div><a class="link" href="#">Privacy</a></div>
+                            <div><a class="link" href="#">Terms</a></div>
+                            <div><a class="link" href="#">Contact</a></div>
                         </div>
-                        <div class="border"></div>
-                        <div class="col-md-4 center">
-                            <i class="fas fa-rabbit me-1"></i><a class="white" href="about.html">About</a>
-                        </div>
+                        <div class="link copyright">Copyright © 2021 Turtles.</div>
                     </div>
                 </div>
-            </div>
-        </aside>
-        <footer>
-            <div class="container">
-                <div class="footer-link d-flex justify-content-between">
-                    <div class="d-flex">
-                        <div><a class="link" href="about.html">About</a></div>
-                        <div><a class="link" href="#">Help</a></div>
-                        <div><a class="link" href="#">Privacy</a></div>
-                        <div><a class="link" href="#"> Terms </a></div>
-                        <div><a class="link" href="#">Contact</a></div>
-                    </div>
-                    <div class="link copyright">Copyright © 2021 Turtles.</div>
-                </div>
-            </div>
-        </footer>
-        @endif
+            </footer>
     </div>
 </body>
 
