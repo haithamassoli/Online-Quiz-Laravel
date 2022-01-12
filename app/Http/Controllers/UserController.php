@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use App\Models\User;
+use App\Models\Exam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -77,11 +79,22 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        $users= User::where('id', $id)->with('exams')->get();
-        // dd($users);
-        // return response($users);
-        return view('admin.show_user', compact('user'));
+        $questions = Question::with(['userAnswer'  => function ($query) use ($id) {
+            $query->where('user_id', $id);
+        }])->get(); 
+        $users= User::where('id', $id)->with('exams')->with('userAnswer')->get();
+        // return response($questions);
+        return view('admin.show_user', compact('questions', 'users'));
+    }
+
+    
+    public function showResult($exam, $id)
+    {
+        $exam = Exam::where('exam_name',$exam)->with('questions')->with(['userAnswer' => function ($query) use ($id) {
+            $query->where('user_id', $id);
+        }])->get();
+
+        return view('result', compact('exam'));
     }
 
     /**

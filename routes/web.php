@@ -29,6 +29,7 @@ Route::name('admin.')->prefix('admin')->middleware(['auth', 'role'])->group(func
     Route::get('/', function () {
         return view('admin.index');
     })->name('dashboard');
+    Route::get('/show-result/{exam}/{id}', [UserController::class, 'showResult'])->name('show-result');
     Route::resource('users', UserController::class);
     Route::resource('exams', ExamController::class);
     Route::resource('categories', CategoryController::class);
