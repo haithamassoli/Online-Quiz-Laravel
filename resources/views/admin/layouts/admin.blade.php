@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-icons/bootstrap-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
-    <link rel="shortcut icon" href="{{ asset('img/logo.svg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" type="image/x-icon">
 </head>
 
 <body>
@@ -26,8 +26,8 @@
             <div class="sidebar-wrapper active">
                 <div class="ms-4">
                     <div class="d-flex justify-content-between">
-                        <div class="logo">
-                            <a href="index.html"><img src="{{ asset('img/logo.svg') }}" width="110" height="100"
+                        <div class="logo pt-5 ps-3">
+                            <a href="index.html"><img src="{{ asset('img/logo.png') }}" width="124" height="44"
                                     alt="Logo" srcset=""></a>
                         </div>
                         <div class="toggler">
@@ -51,17 +51,33 @@
                                 <span>Users</span>
                             </a>
                         </li>
-                        <li class="sidebar-item @if ($pageName == 'Manage Categories') active @endif">
+                        {{-- <li class="sidebar-item @if ($pageName == 'Manage Categories') active @endif">
                             <a href="/admin/categories" class='sidebar-link'>
                                 <i class="fas fa-clipboard-list"></i>
                                 <span>Categories</span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="sidebar-item @if ($pageName == 'Manage Exams') active @endif">
                             <a href="/admin/exams" class='sidebar-link'>
                                 <i class="fas fa-book"></i>
                                 <span>Exams</span>
                             </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="/dashboard" class='sidebar-link'>
+                                <i class="fas fa-clipboard-list"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();                                                                                                   document.getElementById('logout-form').submit();">
+                                       <i class="fas fa-sign-out-alt me-3"></i> {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        class="d-none">
+                                        @csrf
+                                    </form>
                         </li>
                     </ul>
                 </div>
@@ -75,15 +91,26 @@
                 </a>
             </header>
             @yield('content')
-
+<style>
+    .flex-between{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    footer{
+        position: static;
+    }
+</style>
             <footer>
                 <div class="footer clearfix mb-0 text-muted">
-                    <div class="float-start">
-                        <p>2021 &copy; Mazer</p>
-                    </div>
-                    <div class="float-end">
-                        <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by Haitham
-                        </p>
+                    <div class="flex-between">
+                        <div>
+                            <p>2021 &copy; Mazer</p>
+                        </div>
+                        <div>
+                            <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by Haitham
+                            </p>
+                        </div>
                     </div>
                 </div>
             </footer>

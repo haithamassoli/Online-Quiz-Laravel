@@ -12,7 +12,7 @@ $pageName = 'Manage Exams';
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Vertical Form with Icons</h4>
+                <h4 class="card-title">Add Quiz</h4>
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -23,24 +23,24 @@ $pageName = 'Manage Exams';
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="form-group has-icon-left">
-                                        <label for="first-name-icon">Name</label>
+                                        <label for="first-name-icon">Quiz Name</label>
                                         <div class="position-relative">
                                             <input type="text" name="exam_name" class="form-control" placeholder="Name"
                                                 id="first-name-icon">
                                             <div class="form-control-icon">
-                                                <i class="bi bi-person"></i>
+                                                <i class="fas fa-book"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group has-icon-left">
-                                        <label for="email-id-icon">Descreption</label>
+                                        <label for="email-id-icon">Quiz Descreption</label>
                                         <div class="position-relative">
                                             <input type="text" name="exam_desc" class="form-control"
                                                 placeholder="Descreption" id="email-id-icon">
                                             <div class="form-control-icon">
-                                                <i class="bi bi-envelope"></i>
+                                                <i class="fas fa-pencil-alt"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@ $pageName = 'Manage Exams';
                                                 class="form-control" placeholder="Number of Questions"
                                                 id="password-id-icon">
                                             <div class="form-control-icon">
-                                                <i class="bi bi-lock"></i>
+                                                <i class="fas fa-th"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@ $pageName = 'Manage Exams';
                                                 <input type="text" name="question_point{{ $counter }}"
                                                     class="form-control" placeholder="Question Point" id="email-id-icon">
                                                 <div class="form-control-icon">
-                                                    <i class="bi bi-envelope"></i>
+                                                    <i class="far fa-star"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -88,7 +88,7 @@ $pageName = 'Manage Exams';
                                                 <input type="text" name="question_options{{ $counter }}"
                                                     class="form-control" placeholder="split it with ," id="email-id-icon">
                                                 <div class="form-control-icon">
-                                                    <i class="bi bi-envelope"></i>
+                                                    <i class="fas fa-cogs"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -100,7 +100,7 @@ $pageName = 'Manage Exams';
                                                 <input type="text" name="correct_answer{{ $counter }}"
                                                     class="form-control" placeholder="Correct Answer" id="email-id-icon">
                                                 <div class="form-control-icon">
-                                                    <i class="bi bi-envelope"></i>
+                                                    <i class="fas fa-check"></i>
                                                 </div>
                                             </div>
                                         </div>

@@ -41,7 +41,7 @@
                             <div class="box_grid">
                                 <img src="{{ asset("img/$exam->exam_img") }}" alt="">
                                 <div class="quiz-card">
-                                    <div class="card-title">
+                                    <div class="card-title h3">
                                         {{ $exam->exam_name }}
                                     </div>
                                     <ul>
@@ -63,8 +63,7 @@
                                         <li>
                                             <a href="/dashboard/{{ $exam->id }}" id="quizStart1"
                                                 class="btn primaryBtn start-btn ">
-                                                @if (isset($exam->userAnswer[$key]->exam_id))
-                                                    @if ($exam->userAnswer[$key]->exam_id == $exam->id) Complate @endif @else Start @endif
+                                                 Start 
                                             </a>
                                         </li>
                                     </ul>

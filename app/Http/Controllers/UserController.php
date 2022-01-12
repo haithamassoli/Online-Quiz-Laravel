@@ -77,8 +77,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $users = User::findOrFail($id);
-        return view('admin.show_user', compact('users'));
+        $user = User::findOrFail($id);
+        $users= User::where('id', $id)->with('exams')->get();
+        // dd($users);
+        // return response($users);
+        return view('admin.show_user', compact('user'));
     }
 
     /**

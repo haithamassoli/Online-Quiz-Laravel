@@ -7,15 +7,14 @@ $pageName = 'Manage Users';
     <div class="page-heading">
         <div class="page-title">
             <div class="row">
-                <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>DataTable</h3>
-                    <p class="text-subtitle text-muted">For user to check they list</p>
+                <div class="col-12 col-md-6 order-md-1 order-last mb-3">
+                    <h3>Manage Users</h3>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">DataTable</li>
+                            <li class="breadcrumb-item active" aria-current="page">Manage Users</li>
                         </ol>
                     </nav>
                 </div>
@@ -25,7 +24,7 @@ $pageName = 'Manage Users';
         <section class="section">
             <div class="card">
                 <div class="card-header" style="display: flex; justify-content:space-between; align-items:center">
-                    <div>Simple Datatable</div>
+                    <div>Users Table</div>
                     <a href="/admin/users/create"><button class="btn btn-primary">Add User</button></a>
                 </div>
                 <div class="card-body">
@@ -33,8 +32,8 @@ $pageName = 'Manage Users';
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
-                                <th>Email</th>
+                                <th>User Name</th>
+                                <th>User Email</th>
                                 <th>Role</th>
                                 <th>Adjustments</th>
                             </tr>

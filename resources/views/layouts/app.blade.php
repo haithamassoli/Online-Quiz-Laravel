@@ -15,7 +15,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="{{ asset('img/logo.svg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" type="image/x-icon">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -35,7 +35,7 @@
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('img/logo.svg') }}" alt="Turtles">
+                    <img src="{{ asset('img/logo.png') }}" width="124" height="44" alt="Turtles">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -75,6 +75,11 @@
                                     <a class="dropdown-item" href="/profile/{{ Auth::user()->id }}">
                                         {{ __('Profile') }}
                                     </a>
+                                    @if (Auth::user()->role_type == 1)
+                                    <a class="dropdown-item" href="/admin">
+                                        {{ __('Admin Dashboard') }}
+                                    </a>
+                               @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                                                                                                                      document.getElementById('logout-form').submit();">

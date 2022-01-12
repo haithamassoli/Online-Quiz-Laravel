@@ -39,7 +39,7 @@
                             <div class="box_grid">
                                 <img src="{{ asset("img/$item->exam_img") }}" alt="">
                                 <div class="quiz-card">
-                                    <div class="card-title">
+                                    <div class="card-title h3">
                                         {{ $item->exam_name }}
                                     </div>
                                     <ul>

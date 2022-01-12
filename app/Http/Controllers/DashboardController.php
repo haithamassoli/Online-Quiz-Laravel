@@ -19,11 +19,17 @@ class DashboardController extends Controller
     public function show($id)
     {
         $exam = Exam::findOrFail($id);
-        $user = UserAnswer::where('exam_id', $id)->get();
-        if(!isset($user[0]->exam_id)){
-            return view('exam', compact('exam'));
+        $users = UserAnswer::where('exam_id', $id)->get();
+        $user = User::where('id', Auth::user()->id)->with('exams')->get();
+        foreach ($user[0]->exams as $key => $item) {
+            if(isset($item->id)){
+                if($item->id == $id){
+                    return redirect('/dashboard')->with('fail','You have take this exam already!!'); 
+                }
+            }  
         }
-        return redirect('/dashboard')->with('fail','You have take this exam already!!'); 
+            return view('exam', compact('exam'));
+        
     }
 
 

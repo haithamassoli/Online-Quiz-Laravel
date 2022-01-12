@@ -145,7 +145,8 @@ footer {
 /* home-page */
 
 .home-page {
-    background-color: #eefef0;
+    background-color: rgb(160, 198, 233);
+    height: 90vh;
     width: 100%;
 }
 .btn-width {
@@ -157,18 +158,18 @@ footer {
     justify-content: center;
 }
 .hero-title {
-    color: rgb(67, 94, 190);
+    color: rgb(255, 255, 255);
     font-weight: 700;
     font-size: 5rem;
     line-height: 1.3;
 }
 .hero-des {
     font-size: 1.5rem;
-    color: rgb(74, 155, 248);
+    color: rgb(255, 255, 255);
     font-weight: 400;
 }
 .home-img {
-    background-color: #eefef0;
+    background-color: rgb(160, 198, 233);
     margin: 0 auto;
 }
 

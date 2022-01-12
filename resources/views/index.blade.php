@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-lg-5 col-md-6  mt-5">
                     <div class="home-img">
-                        <img src="{{ asset('img/hero-img.png') }}" alt="">
+                        <img src="{{ asset('img/hero_img.png') }}" alt="">
                     </div>
                 </div>
             </div>
