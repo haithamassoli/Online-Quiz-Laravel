@@ -41,27 +41,9 @@ $pageName = 'Manage Users';
                         </tr>
                     </thead>
                     <tbody>
-
-{{-- @foreach ($users[0]->userAnswer as $item )
-@php
- if ($user->id == $item->exam_id){
-     $total += $item->marks;
- }
-@endphp
-
-    {{$item->marks}}<br>
-    @php
-        echo "<pre>";
-            print_r($item->marks);
-            echo "</pre>";
-        @endphp
-@endforeach --}}
-
-
                         @foreach ($users[0]->exams as $user)
                         @php $total = 0; @endphp
                         @php $total_mark = 0; @endphp
-                        @php
                             <tr>
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->exam_name }}</td>

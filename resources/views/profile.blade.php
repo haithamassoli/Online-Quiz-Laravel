@@ -33,8 +33,9 @@
             </div>
             @include('alerts.fail')
             <div class="row quizes-padding ">
+                @if ($user[0]->exams->count() > 0)
                 @foreach ($user[0]->exams as $key => $item)
-                    <div class="col-lg-4 col-md-6 col-sm-6 ">
+                <div class="col-lg-4 col-md-6 col-sm-6 ">
                         <div class="quizes-card">
                             <div class="box_grid">
                                 <img src="{{ asset("img/$item->exam_img") }}" alt="">
@@ -56,12 +57,12 @@
                                                 <i class="far fa-history"></i>
                                             </div>
                                             <span
-                                                class="mx-1 text-sm small ">{{ $item->created_at->diffForHumans() }}</span>
+                                            class="mx-1 text-sm small ">{{ $item->created_at->diffForHumans() }}</span>
                                         </li>
                                         <li>
                                             <a href="/result/{{$item->id}}" id="quizStart1"
                                                 class="btn primaryBtn start-btn ">
-                                                    Show
+                                                Show
                                             </a>
                                         </li>
                                     </ul>
@@ -69,8 +70,12 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                    @endforeach 
+                    @else
+                    <h3 class="text-center mt-5">You did not take any exam</h3>
+                    @endif
+                </div>
             </div>
-        </div>
-    </section>
-@endsection
+        </section>
+        @endsection
+        

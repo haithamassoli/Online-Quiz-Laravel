@@ -59,12 +59,21 @@ function loadQuestions(number) {
         .then((response) => response.json())
         .then((data) => {
             if (number < data[0].exam_num_qus) {
-                window.exam_num_qus = data[0].questions.length;
-                window.question_id = data[0].questions[number].id;
-                window.question_point =
-                    data[0].questions[number].question_point;
-                mark += parseInt(window.question_point);
+                // window.exam_num_qus = data[0].questions.length;
+                // window.question_id = data[0].questions[number].id;
+                // window.question_point =
+                //     data[0].questions[number].question_point;
+                mark += localStorage.getItem("question_point");
                 quizName.innerHTML = data[0].exam_name;
+                localStorage.setItem("exam_num_qus", data[0].questions.length);
+                localStorage.setItem(
+                    "question_id",
+                    data[0].questions[number].id
+                );
+                localStorage.setItem(
+                    "question_point",
+                    data[0].questions[number].question_point
+                );
                 options = data[0].questions[number].question_options;
                 addQuestion(
                     options,
@@ -82,14 +91,14 @@ submit_Button.addEventListener("click", () => {
     numOfQuestion++;
     reset();
     loadQuestions(numOfQuestion);
-    if (numOfQuestion > window.exam_num_qus - 1) {
+    if (numOfQuestion > localStorage.getItem("exam_num_qus") - 1) {
         container.classList.remove("active");
         result_box.classList.add("activeResult");
         numOfQuestion = 0;
         clearInterval(counter);
         clearInterval(counterLine);
     }
-    if (numOfQuestion == window.exam_num_qus - 1) {
+    if (numOfQuestion == localStorage.getItem("exam_num_qus") - 1) {
         submit_Button.textContent = "Submit";
     }
     clearInterval(counter);
@@ -99,7 +108,7 @@ submit_Button.addEventListener("click", () => {
 });
 
 function createBullets(numOfQuestion) {
-    for (let i = 0; i <= window.exam_num_qus - 1; i++) {
+    for (let i = 0; i <= localStorage.getItem("exam_num_qus") - 1; i++) {
         const span = document.createElement("span");
         spans.appendChild(span);
         if (i === numOfQuestion) {
@@ -141,8 +150,8 @@ function checkRightAnswer(correct_answer) {
             user_answers.push(userAnswer);
             if (userAnswer !== correct_answer) {
             } else {
-                total += parseInt(window.question_point);
-                correct = parseInt(window.question_point);
+                total += localStorage.getItem("question_point");
+                correct = localStorage.getItem("question_point");
             }
         }
     });
@@ -176,7 +185,7 @@ function startTimer(time) {
             startTimer(15);
             startTimerLine(15);
 
-            numOfQuestion > window.exam_num_qus - 1
+            numOfQuestion > localStorage.getItem("exam_num_qus") - 1
                 ? window.open(`/result/${exam_id}`, "_self")
                 : "";
         }
@@ -206,7 +215,7 @@ function store_user_answer(userAnswer) {
         body: JSON.stringify({
             exam_id: parseInt(exam_id),
             user_id: parseInt(userId),
-            question_id: parseInt(window.question_id),
+            question_id: parseInt(localStorage.getItem("question_id")),
             user_answer: userAnswer,
             marks: correct,
         }),

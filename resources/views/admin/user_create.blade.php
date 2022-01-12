@@ -6,7 +6,7 @@ $pageName = 'Manage Users';
     <div class="col-md-8 offset-md-2 col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Vertical Form with Icons</h4>
+                <h4 class="card-title">Add User</h4>
             </div>
             <div class="card-content">
                 <div class="card-body">
