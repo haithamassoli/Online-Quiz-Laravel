@@ -14,6 +14,7 @@ $pageName = 'Manage Users';
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-body">
+                        @include('alerts.fail')
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group has-icon-left">

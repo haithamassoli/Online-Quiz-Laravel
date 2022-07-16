@@ -1,5 +1,5 @@
-@if (Session::has('fail'))
+@if($errors->any())
     <div class="alert alert-danger text-center" role="alert">
-        {{ Session::get('fail') }}
+        {{ $errors->first() }}
     </div>
 @endif
